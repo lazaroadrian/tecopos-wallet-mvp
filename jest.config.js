@@ -8,8 +8,8 @@ const config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  setupFilesAfterFramework: ['@testing-library/react-native/extend-expect'],
-  testPathPattern: ['**/__tests__/**/*.{ts,tsx}', '**/*.{spec,test}.{ts,tsx}'],
+  setupFilesAfterEnv: ['@testing-library/react-native/extend-expect'],
+  testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/*.{spec,test}.{ts,tsx}'],
 };
 
 module.exports = config;
