@@ -209,7 +209,7 @@ Per the technical test requirement to mark AI-generated fragments:
 - AI assistance (Claude / Anthropic) was used throughout this project via a structured **Spec-Driven Development (SDD)** workflow.
 - Every source file that was substantially generated or scaffolded with AI assistance carries a header comment:
   ```
-  // AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+  // AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
   ```
 - Architecture decisions, design tradeoffs, and the overall structure were directed and reviewed by the author; AI served as an execution tool, not a decision-maker.
 
