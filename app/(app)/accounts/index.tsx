@@ -1,6 +1,6 @@
 // AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
 import { useRouter } from 'expo-router';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { useAccounts } from '@/application/hooks/useAccounts';
 import { useAccountsWithBalances } from '@/application/hooks/useAccountsWithBalances';
@@ -32,6 +32,15 @@ export default function AccountsScreen() {
         <Text variant="heading" style={styles.title}>
           Accounts
         </Text>
+        {/* Summary navigation entry point (C3) */}
+        <TouchableOpacity
+          onPress={() => router.push('/(app)/summary')}
+          style={styles.summaryButton}
+          accessibilityRole="button"
+          accessibilityLabel="View summary"
+        >
+          <Text style={styles.summaryButtonText}>Summary</Text>
+        </TouchableOpacity>
       </View>
 
       <AccountList
@@ -55,9 +64,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.md,
     paddingTop: spacing.md,
     paddingBottom: spacing.sm,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: typography.xxl,
     fontWeight: typography.bold,
+  },
+  summaryButton: {
+    paddingHorizontal: spacing.sm,
+    paddingVertical: spacing.xs,
+  },
+  summaryButtonText: {
+    color: colors.primary,
+    fontWeight: '600',
+    fontSize: typography.md,
   },
 });
