@@ -159,6 +159,14 @@ npm run lint       # eslint
 
 The APK is built **locally** on your machine — no Expo cloud account or EAS credits required.
 
+### Download the prebuilt APK
+
+A ready-to-install release APK is published on the repository's Releases page:
+
+**→ https://github.com/lazaroadrian/tecopos-wallet-mvp/releases/tag/v1.0.0**
+
+Download `app-release.apk`, transfer it to an Android device, and install it (enable "install from unknown sources"). Log in with the demo credentials above.
+
 ### Prerequisites
 
 - **Node.js** 18 LTS or later
@@ -166,35 +174,39 @@ The APK is built **locally** on your machine — no Expo cloud account or EAS cr
 - **Android SDK** — install via [Android Studio](https://developer.android.com/studio) and make sure `ANDROID_HOME` is set
 - The first local build downloads extra Gradle and Android toolchain bits (~several hundred MB)
 
-### Option A — EAS local build (recommended)
+### Option A — Bare Gradle build (recommended; this is how the released APK was built)
 
-Uses the existing `preview` profile in `eas.json` (outputs APK, not AAB):
-
-```bash
-# 1. Install EAS CLI globally
-npm i -g eas-cli
-
-# 2. Build locally — does NOT consume Expo cloud credits
-eas build -p android --profile preview --local
-```
-
-The resulting APK is placed in the project root (EAS names it `build-*.apk`).
-
-### Option B — Bare Gradle build
+Works natively on Windows, macOS, and Linux:
 
 ```bash
 # 1. Generate the native android/ folder
-npx expo prebuild --platform android
+npx expo prebuild --platform android --clean
 
 # 2. Build the release APK
 cd android
-./gradlew assembleRelease
+./gradlew assembleRelease        # on Windows: .\gradlew.bat assembleRelease
 ```
 
 The APK lands at:
 ```
 android/app/build/outputs/apk/release/app-release.apk
 ```
+
+The release variant is signed with the default debug keystore, so the resulting
+APK is directly installable without extra signing configuration.
+
+### Option B — EAS local build
+
+Uses the existing `preview` profile in `eas.json` (outputs APK, not AAB):
+
+```bash
+npm i -g eas-cli
+eas build -p android --profile preview --local
+```
+
+> **Note:** `eas build --local` is not supported natively on Windows — it
+> requires WSL2. On Windows, use **Option A** (bare Gradle), which is what was
+> used to produce the published release APK.
 
 ### Distributing the APK
 
