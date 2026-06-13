@@ -4,6 +4,10 @@ import { z } from 'zod';
 /**
  * Zod schema for the Create-Operation form (M4 — full field validation rules).
  *
+ * Lives in the application layer, NOT in domain, because it depends on zod
+ * (an external library). The domain layer must remain framework-agnostic with
+ * zero external dependencies (design §Architecture / Dependency Inversion).
+ *
  * Normative rules enforced:
  *
  * amount:

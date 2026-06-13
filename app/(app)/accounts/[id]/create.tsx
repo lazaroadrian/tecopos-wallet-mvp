@@ -2,44 +2,36 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
-  View,
 } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { useCreateOperation } from '@/application/hooks/useOperations';
 import { useOverBalanceWarning } from '@/application/hooks/useOverBalanceWarning';
 import {
   createOperationSchema,
   type CreateOperationFormValues,
-} from '@/domain/validation/createOperationSchema';
-import { Button } from '@/ui/atoms/Button';
-import { Input } from '@/ui/atoms/Input';
-import { Text } from '@/ui/atoms/Text';
-import { FormField } from '@/ui/molecules/FormField';
-import { TypeSelector } from '@/ui/molecules/TypeSelector';
-import { colors, spacing, typography } from '@/ui/theme/tokens';
+} from '@/application/validation/createOperationSchema';
+import { CreateOperationForm } from '@/ui/organisms/CreateOperationForm';
+import { colors, spacing } from '@/ui/theme/tokens';
 
 /**
  * CreateOperationScreen — M4: Create a new operation for the current account.
  *
- * Features:
- *  - react-hook-form + zodResolver wired to createOperationSchema (all M4 rules).
- *  - TypeSelector molecule for income/expense segmented control.
- *  - react-native-modal-datetime-picker for date selection (date only, no future).
- *  - Over-balance warning (A1): non-blocking inline banner when expense > balance.
- *    Computed in useOverBalanceWarning hook (application layer — not inline here).
- *  - Submit: useCreateOperation mutation → on success invalidates operationKeys cache
- *    and accountKeys (so derived balance refreshes) → navigate back to operations list.
- *  - Pending state: submit button loading until mutation settles.
- *  - Error state: Alert shown with message; form data preserved for retry.
- *  - Presented as modal per design (Stack presentation managed by router config).
+ * Container responsibility:
+ *  - Wires react-hook-form + zodResolver to createOperationSchema (all M4 rules).
+ *  - Feeds the useOverBalanceWarning hook (A1) with live-watched form values.
+ *  - Calls useCreateOperation mutation on submit; shows success Alert before
+ *    navigating back (M4 — "success confirmation is shown to the user").
+ *  - On error: shows Alert with message; form data preserved for retry.
+ *  - Delegates ALL rendering to the CreateOperationForm organism.
+ *
+ * Presentational responsibility is fully owned by CreateOperationForm (organism).
  */
 export default function CreateOperationScreen() {
   const router = useRouter();
@@ -64,9 +56,10 @@ export default function CreateOperationScreen() {
     },
   });
 
-  // Watch live values for over-balance warning (A1).
+  // Watch live values for the over-balance warning (A1) and organism display values.
   const watchedAmount = watch('amount');
   const watchedType = watch('type');
+  const watchedDate = watch('date');
 
   const showOverBalanceWarning = useOverBalanceWarning(
     accountId,
@@ -85,8 +78,12 @@ export default function CreateOperationScreen() {
         date: values.date,
       });
 
-      // Navigate back after success; cache invalidation is handled inside useCreateOperation.
-      router.back();
+      // Show explicit success confirmation before navigating away (M4 spec scenario).
+      Alert.alert(
+        'Operation created',
+        'Your operation has been saved successfully.',
+        [{ text: 'OK', onPress: () => router.back() }]
+      );
     } catch {
       Alert.alert(
         'Submission failed',
@@ -95,6 +92,21 @@ export default function CreateOperationScreen() {
       );
     }
   };
+
+  // Derive display value for the amount TextInput (shows empty string until touched).
+  const amountDisplayValue =
+    watchedAmount !== undefined && watchedAmount !== ('' as unknown as number)
+      ? String(watchedAmount)
+      : '';
+
+  // Derive display value for the date Input (formatted locale string).
+  const dateDisplayValue = watchedDate
+    ? watchedDate.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+    : '';
 
   return (
     <KeyboardAvoidingView
@@ -106,126 +118,19 @@ export default function CreateOperationScreen() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        {/* Amount */}
-        <Controller
+        <CreateOperationForm
           control={control}
-          name="amount"
-          render={({ field }) => (
-            <FormField
-              label="Amount"
-              placeholder="0.00"
-              keyboardType="decimal-pad"
-              value={field.value !== undefined && field.value !== ('' as unknown as number)
-                ? String(field.value)
-                : ''}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              error={errors.amount?.message}
-            />
-          )}
-        />
-
-        {/* Type selector */}
-        <View style={styles.field}>
-          <Text variant="label" style={styles.fieldLabel}>
-            Type
-          </Text>
-          <Controller
-            control={control}
-            name="type"
-            render={({ field }) => (
-              <TypeSelector
-                value={field.value}
-                onChange={field.onChange}
-                error={errors.type?.message}
-              />
-            )}
-          />
-        </View>
-
-        {/* Date picker */}
-        <View style={styles.field}>
-          <Text variant="label" style={styles.fieldLabel}>
-            Date
-          </Text>
-          <Controller
-            control={control}
-            name="date"
-            render={({ field }) => (
-              <>
-                <Input
-                  value={field.value
-                    ? field.value.toLocaleDateString(undefined, {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })
-                    : ''}
-                  onFocus={() => setDatePickerVisible(true)}
-                  showSoftInputOnFocus={false}
-                  hasError={!!errors.date}
-                  placeholder="Select a date"
-                  caretHidden
-                />
-                {errors.date ? (
-                  <Text variant="error" style={styles.errorText}>
-                    {errors.date.message}
-                  </Text>
-                ) : null}
-
-                <DateTimePickerModal
-                  isVisible={isDatePickerVisible}
-                  mode="date"
-                  maximumDate={new Date()}
-                  date={field.value ?? new Date()}
-                  onConfirm={(selectedDate) => {
-                    setDatePickerVisible(false);
-                    field.onChange(selectedDate);
-                  }}
-                  onCancel={() => setDatePickerVisible(false)}
-                />
-              </>
-            )}
-          />
-        </View>
-
-        {/* Description */}
-        <Controller
-          control={control}
-          name="description"
-          render={({ field }) => (
-            <FormField
-              label="Description"
-              placeholder="What was this for?"
-              value={field.value}
-              onChangeText={field.onChange}
-              onBlur={field.onBlur}
-              error={errors.description?.message}
-              multiline
-              numberOfLines={3}
-              style={styles.descriptionInput}
-              autoCapitalize="sentences"
-              autoCorrect
-            />
-          )}
-        />
-
-        {/* Over-balance warning (A1) — non-blocking */}
-        {showOverBalanceWarning ? (
-          <View style={styles.warningBanner}>
-            <Text style={styles.warningText}>
-              Warning: This expense exceeds the current account balance. You can still submit.
-            </Text>
-          </View>
-        ) : null}
-
-        {/* Submit */}
-        <Button
-          title="Save Operation"
-          onPress={handleSubmit(onSubmit)}
-          loading={isSubmitting}
-          disabled={!isValid || isSubmitting}
-          style={styles.submitBtn}
+          errors={errors}
+          isDatePickerVisible={isDatePickerVisible}
+          onDatePickerOpen={() => setDatePickerVisible(true)}
+          onDatePickerClose={() => setDatePickerVisible(false)}
+          amountDisplayValue={amountDisplayValue}
+          dateDisplayValue={dateDisplayValue}
+          watchedDate={watchedDate}
+          showOverBalanceWarning={showOverBalanceWarning}
+          isSubmitting={isSubmitting}
+          isValid={isValid}
+          onSubmit={handleSubmit(onSubmit)}
         />
       </ScrollView>
     </KeyboardAvoidingView>
@@ -239,36 +144,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: spacing.md,
-    gap: spacing.md,
     paddingBottom: spacing.xxl,
-  },
-  field: {
-    gap: spacing.xs,
-  },
-  fieldLabel: {
-    marginBottom: 2,
-  },
-  errorText: {
-    marginTop: 2,
-  },
-  descriptionInput: {
-    height: 80,
-    textAlignVertical: 'top',
-    paddingTop: spacing.sm,
-  },
-  warningBanner: {
-    backgroundColor: colors.warningBackground,
-    borderWidth: 1,
-    borderColor: colors.warning,
-    borderRadius: 8,
-    padding: spacing.md,
-  },
-  warningText: {
-    color: colors.warning,
-    fontSize: typography.sm,
-    fontWeight: '500' as const,
-  },
-  submitBtn: {
-    marginTop: spacing.sm,
   },
 });
