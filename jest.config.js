@@ -8,6 +8,9 @@ const config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  // Set EXPO_PUBLIC_MOCKAPI_URL before any module loads so that config.ts's
+  // dev console.warn is silenced in the test environment (FIX-4 / S3).
+  setupFiles: ['<rootDir>/src/__mocks__/jest.setup.env.ts'],
   setupFilesAfterEnv: ['@testing-library/react-native/extend-expect'],
   testMatch: ['**/__tests__/**/*.{ts,tsx}', '**/*.{spec,test}.{ts,tsx}'],
 };

@@ -2,9 +2,10 @@
 import { useWindowDimensions } from 'react-native';
 
 /**
- * Responsive breakpoint hook (design §9 — NFR1).
+ * Responsive breakpoint hook (NFR1).
  *
- * Breakpoint: width >= 768 → isTablet (wider layout).
+ * Breakpoint: width >= 600 dp → isTablet (wider layout).
+ * Value 600 comes from the spec's NFR1 requirement ("tablet layout at 600 dp").
  * Recomputes automatically on orientation change or window resize.
  *
  * Usage:
@@ -12,8 +13,12 @@ import { useWindowDimensions } from 'react-native';
  *   // isTablet → 2-column grid, wider content, side-by-side panels
  *   // !isTablet → single column (phone default)
  */
+
+/** Tablet breakpoint in dp, per spec NFR1. */
+const TABLET_BREAKPOINT_DP = 600;
+
 export function useResponsive() {
   const { width } = useWindowDimensions();
-  const isTablet = width >= 768;
+  const isTablet = width >= TABLET_BREAKPOINT_DP;
   return { isTablet, width };
 }
