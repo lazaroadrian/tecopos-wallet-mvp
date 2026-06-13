@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { accountKeys } from '@/data/query-keys/accountKeys';
 import { operationKeys } from '@/data/query-keys/operationKeys';
 import { operationRepository } from '@/data/repositories';
 import { type CreateOperationInput } from '@/domain/entities/Operation';
@@ -25,7 +26,13 @@ export function useOperations(accountId: string) {
   });
 }
 
-/** Mutation hook for creating a new operation. Invalidates the account's ops list on success. */
+/**
+ * Mutation hook for creating a new operation.
+ * On success:
+ *  - Invalidates operationKeys.byAccount(accountId) → operations list refetches.
+ *  - Invalidates accountKeys.all → AccountsScreen's derived balance refreshes
+ *    on next visit (useAccountsWithBalances re-fires the ops queries).
+ */
 export function useCreateOperation(accountId: string) {
   const queryClient = useQueryClient();
 
@@ -33,10 +40,14 @@ export function useCreateOperation(accountId: string) {
     mutationFn: (input: CreateOperationInput) =>
       operationRepository.create(accountId, input),
     onSuccess: () => {
-      // Invalidate only this account's operations; balance is derived from cache,
-      // so the balance view auto-updates when this query refetches (design §5 mutation flow).
+      // Invalidate this account's operations so the list reflects the new entry.
       void queryClient.invalidateQueries({
         queryKey: operationKeys.byAccount(accountId),
+      });
+      // Also invalidate the accounts-with-balances cache so the AccountsScreen
+      // shows the updated derived balance when the user navigates back (design §5).
+      void queryClient.invalidateQueries({
+        queryKey: accountKeys.all,
       });
     },
   });
