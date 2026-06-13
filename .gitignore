@@ -18,6 +18,10 @@ build/
 *.aab
 *.ipa
 
+# Expo managed/prebuild generated native directory
+/android
+/ios
+
 # OS files
 .DS_Store
 Thumbs.db
