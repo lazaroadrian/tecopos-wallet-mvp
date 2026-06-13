@@ -1,4 +1,4 @@
-// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';

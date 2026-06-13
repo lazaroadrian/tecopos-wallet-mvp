@@ -85,7 +85,7 @@ The project follows a **Clean / Hexagonal** architecture with four layers and De
 
 ```bash
 # 1. Clone the repository
-git clone <GITHUB_REPO_URL>
+git clone https://github.com/lazaroadrian/tecopos-wallet-mvp
 cd wallet-mvp
 
 # 2. Install dependencies
@@ -155,28 +155,50 @@ npm run lint       # eslint
 
 ---
 
-## Build APK (EAS)
+## Build APK (Local)
 
-To produce an installable Android APK using [Expo Application Services](https://expo.dev/eas):
+The APK is built **locally** on your machine — no Expo cloud account or EAS credits required.
+
+### Prerequisites
+
+- **Node.js** 18 LTS or later
+- **JDK 17** (required by Gradle; `java -version` should report 17)
+- **Android SDK** — install via [Android Studio](https://developer.android.com/studio) and make sure `ANDROID_HOME` is set
+- The first local build downloads extra Gradle and Android toolchain bits (~several hundred MB)
+
+### Option A — EAS local build (recommended)
+
+Uses the existing `preview` profile in `eas.json` (outputs APK, not AAB):
 
 ```bash
 # 1. Install EAS CLI globally
 npm i -g eas-cli
 
-# 2. Log in to your Expo account
-eas login
-
-# 3. (First time only) Link the project to your EAS account
-#    This writes the projectId into app.json automatically.
-eas build:configure
-
-# 4. Build the Android APK
-eas build -p android --profile preview
+# 2. Build locally — does NOT consume Expo cloud credits
+eas build -p android --profile preview --local
 ```
 
-The `preview` profile is already configured in `eas.json` to produce an APK (not an AAB), which can be installed directly on any Android device.
+The resulting APK is placed in the project root (EAS names it `build-*.apk`).
 
-**Download the built APK:** `<APK_DOWNLOAD_URL>`
+### Option B — Bare Gradle build
+
+```bash
+# 1. Generate the native android/ folder
+npx expo prebuild --platform android
+
+# 2. Build the release APK
+cd android
+./gradlew assembleRelease
+```
+
+The APK lands at:
+```
+android/app/build/outputs/apk/release/app-release.apk
+```
+
+### Distributing the APK
+
+Once built, the APK can be shared by attaching it to a **GitHub Release** of this repository (`https://github.com/lazaroadrian/tecopos-wallet-mvp/releases`). Download it from the Releases page of that repo.
 
 ---
 
@@ -191,7 +213,7 @@ Per the technical test requirement to mark AI-generated fragments:
   ```
 - Architecture decisions, design tradeoffs, and the overall structure were directed and reviewed by the author; AI served as an execution tool, not a decision-maker.
 
-**Author / reviewer:** `<AUTHOR_NAME>`
+**Author / reviewer:** Lázaro Adrian
 
 ---
 

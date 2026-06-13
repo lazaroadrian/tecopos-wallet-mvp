@@ -1,4 +1,4 @@
-// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
 import { useRouter } from 'expo-router';
 import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
 

@@ -1,4 +1,4 @@
-// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
 import { StyleSheet, type TextStyle } from 'react-native';
 
 import { getCurrencySymbol } from '@/constants/currencies';

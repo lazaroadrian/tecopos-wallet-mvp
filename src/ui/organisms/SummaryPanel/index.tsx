@@ -1,4 +1,4 @@
-// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
 import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { type CurrencySummary } from '@/domain/use-cases/summarizeByCurrency';

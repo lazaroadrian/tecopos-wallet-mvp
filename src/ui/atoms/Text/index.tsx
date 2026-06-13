@@ -1,4 +1,4 @@
-// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
 import { Text as RNText, StyleSheet, type TextStyle, type TextProps } from 'react-native';
 
 import { colors, typography } from '@/ui/theme/tokens';

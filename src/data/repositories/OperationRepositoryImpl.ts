@@ -1,4 +1,4 @@
-// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
 
 import { type CreateOperationInput, type Operation } from '@/domain/entities/Operation';
 import { type OperationRepository } from '@/domain/repositories/OperationRepository';

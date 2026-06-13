@@ -1,4 +1,4 @@
-// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+// AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
 
 import { useAccounts } from '@/application/hooks/useAccounts';
 import { useAccountsWithBalances } from '@/application/hooks/useAccountsWithBalances';
