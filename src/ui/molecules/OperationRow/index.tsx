@@ -1,4 +1,5 @@
 // AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by <author>.
+import { MotiView } from 'moti';
 import { StyleSheet, View } from 'react-native';
 
 import { type Operation } from '@/domain/entities/Operation';
@@ -11,6 +12,8 @@ export interface OperationRowProps {
   operation: Operation;
   /** Account currency — operations inherit the parent account's currency (A7/C2). */
   currency: string;
+  /** Index in the list for staggered entrance animation. */
+  index?: number;
 }
 
 /**
@@ -20,10 +23,11 @@ export interface OperationRowProps {
  *  - Amount via CurrencyAmount in the account's currency (A7/C2).
  *  - Date (formatted as locale date string).
  *  - Description.
+ *  - Moti entrance animation (fade + slide up, staggered by index) (NFR1/WU-9).
  *
  * Income/expense visual distinction satisfies M3 "income and expense visually distinguished".
  */
-export function OperationRow({ operation, currency }: OperationRowProps) {
+export function OperationRow({ operation, currency, index = 0 }: OperationRowProps) {
   const isIncome = operation.type === 'income';
   const displayAmount = isIncome ? operation.amount : -operation.amount;
   const formattedDate = operation.date.toLocaleDateString(undefined, {
@@ -33,33 +37,42 @@ export function OperationRow({ operation, currency }: OperationRowProps) {
   });
 
   return (
-    <View style={styles.row}>
-      {/* Type badge — income/expense visual distinction (C4) */}
-      <View style={[styles.badge, isIncome ? styles.badgeIncome : styles.badgeExpense]}>
-        <Text style={[styles.badgeText, isIncome ? styles.badgeTextIncome : styles.badgeTextExpense]}>
-          {isIncome ? 'INC' : 'EXP'}
-        </Text>
-      </View>
+    <MotiView
+      from={{ opacity: 0, translateY: 8 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ type: 'timing', duration: 250, delay: Math.min(index * 40, 400) }}
+    >
+      <View
+        style={styles.row}
+        accessibilityLabel={`${isIncome ? 'Income' : 'Expense'}: ${operation.description}, ${currency} ${operation.amount}, ${formattedDate}`}
+      >
+        {/* Type badge — income/expense visual distinction (C4) */}
+        <View style={[styles.badge, isIncome ? styles.badgeIncome : styles.badgeExpense]}>
+          <Text style={[styles.badgeText, isIncome ? styles.badgeTextIncome : styles.badgeTextExpense]}>
+            {isIncome ? 'INC' : 'EXP'}
+          </Text>
+        </View>
 
-      {/* Description + date */}
-      <View style={styles.details}>
-        <Text variant="body" numberOfLines={1} style={styles.description}>
-          {operation.description}
-        </Text>
-        <Text variant="caption" style={styles.date}>
-          {formattedDate}
-        </Text>
-      </View>
+        {/* Description + date */}
+        <View style={styles.details}>
+          <Text variant="body" numberOfLines={1} style={styles.description}>
+            {operation.description}
+          </Text>
+          <Text variant="caption" style={styles.date}>
+            {formattedDate}
+          </Text>
+        </View>
 
-      {/* Amount — signed and color-coded by type (C2) */}
-      <CurrencyAmount
-        amount={displayAmount}
-        currency={currency}
-        showSign
-        variant="body"
-        style={styles.amount}
-      />
-    </View>
+        {/* Amount — signed and color-coded by type (C2) */}
+        <CurrencyAmount
+          amount={displayAmount}
+          currency={currency}
+          showSign
+          variant="body"
+          style={styles.amount}
+        />
+      </View>
+    </MotiView>
   );
 }
 

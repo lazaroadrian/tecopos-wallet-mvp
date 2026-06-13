@@ -66,8 +66,8 @@ export function OperationList({
     <FlatList
       data={operations}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <OperationRow operation={item} currency={currency} />
+      renderItem={({ item, index }) => (
+        <OperationRow operation={item} currency={currency} index={index} />
       )}
       contentContainerStyle={styles.list}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
