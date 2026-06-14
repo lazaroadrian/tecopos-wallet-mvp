@@ -1,7 +1,7 @@
 // AI-ASSISTED: generated with Claude (Gentle AI / SDD). Reviewed by Lázaro Adrian.
 import { StyleSheet, View } from 'react-native';
 
-import { spacing } from '@/ui/theme/tokens';
+import { colors, radii, spacing, typography } from '@/ui/theme/tokens';
 
 import { Button } from '../../atoms/Button';
 import { Text } from '../../atoms/Text';
@@ -21,6 +21,9 @@ export interface EmptyStateProps {
 export function EmptyState({ title, subtitle, ctaLabel, onCta }: EmptyStateProps) {
   return (
     <View style={styles.container}>
+      <View style={styles.iconCircle}>
+        <Text style={styles.iconText}>○</Text>
+      </View>
       <Text variant="heading" style={styles.title}>
         {title}
       </Text>
@@ -44,11 +47,29 @@ const styles = StyleSheet.create({
     padding: spacing.xl,
     gap: spacing.sm,
   },
+  iconCircle: {
+    width: 64,
+    height: 64,
+    borderRadius: radii.full,
+    backgroundColor: colors.borderSubtle,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.xs,
+  },
+  iconText: {
+    fontSize: 28,
+    color: colors.textMuted,
+    lineHeight: 34,
+  },
   title: {
     textAlign: 'center',
+    color: colors.textPrimary,
+    fontWeight: typography.semibold,
   },
   subtitle: {
     textAlign: 'center',
+    color: colors.textMuted,
+    lineHeight: 20,
   },
   cta: {
     marginTop: spacing.md,

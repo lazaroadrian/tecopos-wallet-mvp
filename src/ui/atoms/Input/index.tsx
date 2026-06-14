@@ -33,8 +33,8 @@ export function Input({ hasError = false, style, ...props }: InputProps) {
 
 const styles = StyleSheet.create({
   input: {
-    height: 48,
-    borderWidth: 1,
+    height: 50,
+    borderWidth: 1.5,
     borderColor: colors.border,
     borderRadius: radii.md,
     paddingHorizontal: spacing.md,
