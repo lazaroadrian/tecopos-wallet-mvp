@@ -24,7 +24,7 @@ export function SummaryByCurrency({ summary }: SummaryByCurrencyProps) {
   return (
     <View
       style={styles.card}
-      accessibilityLabel={`${currency} summary: income ${totalIncome}, expense ${totalExpense}, net ${net}`}
+      accessibilityLabel={`Resumen ${currency}: ingresos ${totalIncome}, egresos ${totalExpense}, neto ${net}`}
     >
       {/* Currency header */}
       <View style={styles.header}>
@@ -34,7 +34,7 @@ export function SummaryByCurrency({ summary }: SummaryByCurrencyProps) {
           </Text>
         </View>
         <Text variant="caption" style={styles.noConversionNote}>
-          No cross-currency total
+          Sin total entre monedas
         </Text>
       </View>
 
@@ -42,7 +42,7 @@ export function SummaryByCurrency({ summary }: SummaryByCurrencyProps) {
       <View style={styles.rows}>
         <View style={styles.row}>
           <Text variant="label" style={styles.rowLabel}>
-            Income
+            Ingresos
           </Text>
           <CurrencyAmount
             amount={totalIncome}
@@ -54,7 +54,7 @@ export function SummaryByCurrency({ summary }: SummaryByCurrencyProps) {
 
         <View style={styles.row}>
           <Text variant="label" style={styles.rowLabel}>
-            Expenses
+            Egresos
           </Text>
           {/* Show expense as negative for color-coding */}
           <CurrencyAmount
@@ -66,7 +66,7 @@ export function SummaryByCurrency({ summary }: SummaryByCurrencyProps) {
 
         <View style={[styles.row, styles.netRow]}>
           <Text variant="body" style={styles.netLabel}>
-            Net
+            Neto
           </Text>
           <CurrencyAmount
             amount={net}

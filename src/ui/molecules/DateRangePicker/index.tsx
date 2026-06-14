@@ -31,7 +31,7 @@ export function DateRangePicker({ value, onChange }: DateRangePickerProps) {
   const [activeField, setActiveField] = useState<'start' | 'end' | null>(null);
 
   const formatDate = (date: Date | null): string => {
-    if (!date) return 'Select date';
+    if (!date) return 'Seleccionar fecha';
     return date.toLocaleDateString(undefined, {
       year: 'numeric',
       month: 'short',
@@ -70,15 +70,15 @@ export function DateRangePicker({ value, onChange }: DateRangePickerProps) {
 
   return (
     <View style={styles.container}>
-      {/* From field */}
+      {/* Desde field */}
       <TouchableOpacity
         style={styles.field}
         onPress={() => setActiveField('start')}
         accessibilityRole="button"
-        accessibilityLabel={`From date: ${formatDate(value.start)}`}
+        accessibilityLabel={`Desde: ${formatDate(value.start)}`}
       >
         <Text variant="caption" style={styles.fieldLabel}>
-          From
+          Desde
         </Text>
         <Text variant="body" style={styles.fieldValue}>
           {formatDate(value.start)}
@@ -89,15 +89,15 @@ export function DateRangePicker({ value, onChange }: DateRangePickerProps) {
         –
       </Text>
 
-      {/* To field */}
+      {/* Hasta field */}
       <TouchableOpacity
         style={styles.field}
         onPress={() => setActiveField('end')}
         accessibilityRole="button"
-        accessibilityLabel={`To date: ${formatDate(value.end)}`}
+        accessibilityLabel={`Hasta: ${formatDate(value.end)}`}
       >
         <Text variant="caption" style={styles.fieldLabel}>
-          To
+          Hasta
         </Text>
         <Text variant="body" style={styles.fieldValue}>
           {formatDate(value.end)}

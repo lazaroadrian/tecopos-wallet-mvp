@@ -13,8 +13,8 @@ export interface TypeSelectorProps {
 }
 
 const OPTIONS: { label: string; value: OperationType }[] = [
-  { label: 'Income', value: 'income' },
-  { label: 'Expense', value: 'expense' },
+  { label: 'Ingreso', value: 'income' },
+  { label: 'Egreso', value: 'expense' },
 ];
 
 /**

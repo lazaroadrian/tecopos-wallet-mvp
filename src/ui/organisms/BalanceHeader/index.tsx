@@ -41,7 +41,7 @@ export function BalanceHeader({ account, operations }: BalanceHeaderProps) {
 
       <View style={styles.balanceRow}>
         <Text variant="label" style={styles.balanceLabel}>
-          Current Balance
+          Saldo actual
         </Text>
         <CurrencyAmount
           amount={balance}

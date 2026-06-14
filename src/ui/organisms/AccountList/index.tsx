@@ -51,9 +51,9 @@ export function AccountList({
     return (
       <View style={styles.errorContainer}>
         <Text variant="error" style={styles.errorText}>
-          Failed to load accounts. Check your connection and try again.
+          No se pudieron cargar las cuentas. Verifique su conexión e intente de nuevo.
         </Text>
-        <Button title="Retry" onPress={onRetry} variant="ghost" style={styles.retryBtn} />
+        <Button title="Reintentar" onPress={onRetry} variant="ghost" style={styles.retryBtn} />
       </View>
     );
   }
@@ -61,8 +61,8 @@ export function AccountList({
   if (accounts.length === 0) {
     return (
       <EmptyState
-        title="No accounts yet"
-        subtitle="Your accounts will appear here once they are set up."
+        title="Sin cuentas"
+        subtitle="Sus cuentas aparecerán aquí una vez configuradas."
       />
     );
   }

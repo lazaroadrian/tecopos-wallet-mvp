@@ -30,16 +30,16 @@ export default function AccountsScreen() {
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
         <Text variant="heading" style={styles.title}>
-          Accounts
+          Cuentas
         </Text>
         {/* Summary navigation entry point (C3) */}
         <TouchableOpacity
           onPress={() => router.push('/(app)/summary')}
           style={styles.summaryButton}
           accessibilityRole="button"
-          accessibilityLabel="View summary"
+          accessibilityLabel="Ver resumen"
         >
-          <Text style={styles.summaryButtonText}>Summary</Text>
+          <Text style={styles.summaryButtonText}>Resumen</Text>
         </TouchableOpacity>
       </View>
 

@@ -38,11 +38,16 @@ export default function AppLayout() {
         headerRight: () => (
           <TouchableOpacity onPress={handleLogout} style={{ marginRight: 8 }}>
             <Text style={{ color: colors.primary, fontWeight: '600' }}>
-              Logout
+              Cerrar sesión
             </Text>
           </TouchableOpacity>
         ),
       }}
-    />
+    >
+      <Stack.Screen name="accounts/index" options={{ title: 'Cuentas' }} />
+      <Stack.Screen name="accounts/[id]/index" options={{ title: 'Operaciones' }} />
+      <Stack.Screen name="accounts/[id]/create" options={{ title: 'Nueva operación' }} />
+      <Stack.Screen name="summary" options={{ title: 'Resumen' }} />
+    </Stack>
   );
 }

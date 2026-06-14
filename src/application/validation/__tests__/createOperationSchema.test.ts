@@ -80,7 +80,7 @@ describe('createOperationSchema — amount', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       const amountError = result.error.issues.find(
-        (i) => i.path[0] === 'amount' && i.message.includes('greater than 0')
+        (i) => i.path[0] === 'amount' && i.message.includes('mayor que cero')
       );
       expect(amountError).toBeDefined();
     }
@@ -91,7 +91,7 @@ describe('createOperationSchema — amount', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       const amountError = result.error.issues.find(
-        (i) => i.path[0] === 'amount' && i.message.includes('greater than 0')
+        (i) => i.path[0] === 'amount' && i.message.includes('mayor que cero')
       );
       expect(amountError).toBeDefined();
     }
@@ -111,7 +111,7 @@ describe('createOperationSchema — amount', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       const amountError = result.error.issues.find(
-        (i) => i.path[0] === 'amount' && i.message.includes('2 decimal')
+        (i) => i.path[0] === 'amount' && i.message.includes('2 decimales')
       );
       expect(amountError).toBeDefined();
     }
@@ -187,7 +187,7 @@ describe('createOperationSchema — date', () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       const dateError = result.error.issues.find(
-        (i) => i.path[0] === 'date' && i.message.includes('future')
+        (i) => i.path[0] === 'date' && i.message.includes('futura')
       );
       expect(dateError).toBeDefined();
     }

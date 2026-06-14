@@ -44,12 +44,12 @@ export function OperationRow({ operation, currency, index = 0 }: OperationRowPro
     >
       <View
         style={styles.row}
-        accessibilityLabel={`${isIncome ? 'Income' : 'Expense'}: ${operation.description}, ${currency} ${operation.amount}, ${formattedDate}`}
+        accessibilityLabel={`${isIncome ? 'Ingreso' : 'Egreso'}: ${operation.description}, ${currency} ${operation.amount}, ${formattedDate}`}
       >
         {/* Type badge — income/expense visual distinction (C4) */}
         <View style={[styles.badge, isIncome ? styles.badgeIncome : styles.badgeExpense]}>
           <Text style={[styles.badgeText, isIncome ? styles.badgeTextIncome : styles.badgeTextExpense]}>
-            {isIncome ? 'INC' : 'EXP'}
+            {isIncome ? 'ING' : 'EGR'}
           </Text>
         </View>
 

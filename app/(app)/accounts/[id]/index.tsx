@@ -84,7 +84,7 @@ export default function OperationsScreen() {
         onPress={handleCreateOperation}
         activeOpacity={0.8}
         accessibilityRole="button"
-        accessibilityLabel="Add new operation"
+        accessibilityLabel="Agregar nueva operación"
       >
         <Text style={styles.fabIcon}>+</Text>
       </TouchableOpacity>

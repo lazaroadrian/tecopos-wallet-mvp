@@ -44,9 +44,9 @@ export function OperationList({
     return (
       <View style={styles.errorContainer}>
         <Text variant="error" style={styles.errorText}>
-          Failed to load operations. Check your connection and try again.
+          No se pudieron cargar las operaciones. Verifique su conexión e intente de nuevo.
         </Text>
-        <Button title="Retry" onPress={onRetry} variant="ghost" style={styles.retryBtn} />
+        <Button title="Reintentar" onPress={onRetry} variant="ghost" style={styles.retryBtn} />
       </View>
     );
   }
@@ -54,9 +54,9 @@ export function OperationList({
   if (operations.length === 0) {
     return (
       <EmptyState
-        title="No operations yet"
-        subtitle="Add your first operation to start tracking this account."
-        ctaLabel={onCreateOperation ? 'Add Operation' : undefined}
+        title="Sin operaciones"
+        subtitle="Agregue su primera operación para empezar a registrar esta cuenta."
+        ctaLabel={onCreateOperation ? 'Agregar operación' : undefined}
         onCta={onCreateOperation}
       />
     );

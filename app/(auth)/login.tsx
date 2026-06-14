@@ -14,8 +14,8 @@ import { colors, spacing, typography } from '@/ui/theme/tokens';
 
 /** Login form validation schema (M1 — required fields only). */
 const loginSchema = z.object({
-  username: z.string().min(1, 'Username is required'),
-  password: z.string().min(1, 'Password is required'),
+  username: z.string().min(1, 'El usuario es obligatorio'),
+  password: z.string().min(1, 'La contraseña es obligatoria'),
 });
 
 type LoginFormValues = z.infer<typeof loginSchema>;
@@ -55,7 +55,7 @@ export default function LoginScreen() {
         Wallet MVP
       </Text>
       <Text variant="label" style={styles.subtitle}>
-        Sign in to continue
+        Ingrese sus credenciales para continuar
       </Text>
 
       <View style={styles.form}>
@@ -64,8 +64,8 @@ export default function LoginScreen() {
           name="username"
           render={({ field: { onChange, onBlur, value } }) => (
             <FormField
-              label="Username"
-              placeholder="Enter your username"
+              label="Usuario"
+              placeholder="Ingrese su usuario"
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
@@ -81,8 +81,8 @@ export default function LoginScreen() {
           name="password"
           render={({ field: { onChange, onBlur, value } }) => (
             <FormField
-              label="Password"
-              placeholder="Enter your password"
+              label="Contraseña"
+              placeholder="Ingrese su contraseña"
               onChangeText={onChange}
               onBlur={onBlur}
               value={value}
@@ -102,7 +102,7 @@ export default function LoginScreen() {
         ) : null}
 
         <Button
-          title="Sign In"
+          title="Iniciar sesión"
           onPress={handleSubmit(onSubmit)}
           loading={isSubmitting}
           disabled={!isValid}

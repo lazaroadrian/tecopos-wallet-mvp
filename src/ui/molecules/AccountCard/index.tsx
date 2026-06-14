@@ -36,7 +36,7 @@ export function AccountCard({ account, operations, onPress }: AccountCardProps) 
       onPress={onPress}
       activeOpacity={0.8}
       accessibilityRole="button"
-      accessibilityLabel={`${account.name}, balance ${balance}`}
+      accessibilityLabel={`${account.name}, saldo ${balance}`}
     >
       <View style={styles.header}>
         <Text variant="heading" style={styles.name} numberOfLines={1}>
@@ -56,7 +56,7 @@ export function AccountCard({ account, operations, onPress }: AccountCardProps) 
       ) : null}
 
       <View style={styles.balanceRow}>
-        <Text variant="caption">Balance</Text>
+        <Text variant="caption">Saldo</Text>
         <CurrencyAmount
           amount={balance}
           currency={account.currency}

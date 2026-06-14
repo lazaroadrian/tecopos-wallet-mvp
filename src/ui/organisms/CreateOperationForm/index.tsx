@@ -72,7 +72,7 @@ export function CreateOperationForm({
         name="amount"
         render={({ field }) => (
           <FormField
-            label="Amount"
+            label="Monto"
             placeholder="0.00"
             keyboardType="decimal-pad"
             value={amountDisplayValue}
@@ -86,7 +86,7 @@ export function CreateOperationForm({
       {/* Type selector */}
       <View style={styles.field}>
         <Text variant="label" style={styles.fieldLabel}>
-          Type
+          Tipo
         </Text>
         <Controller
           control={control}
@@ -104,7 +104,7 @@ export function CreateOperationForm({
       {/* Date picker */}
       <View style={styles.field}>
         <Text variant="label" style={styles.fieldLabel}>
-          Date
+          Fecha
         </Text>
         <Controller
           control={control}
@@ -116,7 +116,7 @@ export function CreateOperationForm({
                 onFocus={onDatePickerOpen}
                 showSoftInputOnFocus={false}
                 hasError={!!errors.date}
-                placeholder="Select a date"
+                placeholder="Seleccionar fecha"
                 caretHidden
               />
               {errors.date ? (
@@ -147,8 +147,8 @@ export function CreateOperationForm({
         name="description"
         render={({ field }) => (
           <FormField
-            label="Description"
-            placeholder="What was this for?"
+            label="Descripción"
+            placeholder="¿Para qué fue esto?"
             value={field.value}
             onChangeText={field.onChange}
             onBlur={field.onBlur}
@@ -166,14 +166,14 @@ export function CreateOperationForm({
       {showOverBalanceWarning ? (
         <View style={styles.warningBanner}>
           <Text style={styles.warningText}>
-            Warning: This expense exceeds the current account balance. You can still submit.
+            Advertencia: Este egreso supera el saldo actual de la cuenta. Puede guardarlo de todas formas.
           </Text>
         </View>
       ) : null}
 
       {/* Submit */}
       <Button
-        title="Save Operation"
+        title="Guardar operación"
         onPress={onSubmit}
         loading={isSubmitting}
         disabled={!isValid || isSubmitting}

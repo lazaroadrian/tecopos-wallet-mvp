@@ -52,7 +52,7 @@ export const useAuthStore = create<AuthState>()((set) => ({
     );
 
     if (!match) {
-      return 'Invalid credentials. Please try again.';
+      return 'Credenciales incorrectas. Por favor intente de nuevo.';
     }
 
     const session: Session = { username: match.username };

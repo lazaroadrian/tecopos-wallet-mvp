@@ -80,15 +80,15 @@ export default function CreateOperationScreen() {
 
       // Show explicit success confirmation before navigating away (M4 spec scenario).
       Alert.alert(
-        'Operation created',
-        'Your operation has been saved successfully.',
-        [{ text: 'OK', onPress: () => router.back() }]
+        'Operación creada',
+        'La operación se guardó correctamente.',
+        [{ text: 'Aceptar', onPress: () => router.back() }]
       );
     } catch {
       Alert.alert(
-        'Submission failed',
-        'Could not save the operation. Please check your connection and try again.',
-        [{ text: 'OK' }]
+        'Error al guardar',
+        'No se pudo guardar la operación. Verifique su conexión e intente de nuevo.',
+        [{ text: 'Aceptar' }]
       );
     }
   };

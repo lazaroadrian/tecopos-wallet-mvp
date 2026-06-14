@@ -51,7 +51,7 @@ export function SummaryPanel({
       {/* Date range filter — always visible */}
       <View style={styles.pickerContainer}>
         <Text variant="label" style={styles.pickerLabel}>
-          Date Range
+          Rango de fechas
         </Text>
         <DateRangePicker value={dateRange} onChange={onRangeChange} />
       </View>
@@ -61,8 +61,8 @@ export function SummaryPanel({
         <SkeletonList count={3} />
       ) : summaries.length === 0 ? (
         <EmptyState
-          title="No operations in range"
-          subtitle="Try adjusting the date range to see your summary."
+          title="Sin operaciones en el período"
+          subtitle="Intente ajustar el rango de fechas para ver su resumen."
         />
       ) : (
         <View style={[styles.cards, isTablet && styles.cardsTablet]}>

@@ -63,18 +63,18 @@ export const createOperationSchema = z.object({
       (val) => (typeof val === 'string' ? val.trim() : val),
       z
         .coerce
-        .number({ invalid_type_error: 'Amount must be a number', required_error: 'Amount is required' })
-        .positive('Amount must be greater than 0')
-        .max(AMOUNT_MAX, `Amount must be at most ${AMOUNT_MAX.toLocaleString()}`)
+        .number({ invalid_type_error: 'El monto debe ser un número', required_error: 'El monto es obligatorio' })
+        .positive('El monto debe ser mayor que cero')
+        .max(AMOUNT_MAX, `El monto supera el máximo permitido`)
         .refine(atMostTwoDecimals, {
-          message: 'Amount must have at most 2 decimal places',
+          message: 'El monto admite máximo 2 decimales',
         })
     ),
 
   /** Type: must be exactly 'income' or 'expense'. */
   type: z.enum(['income', 'expense'], {
-    required_error: 'Type is required',
-    invalid_type_error: 'Type must be income or expense',
+    required_error: 'Seleccione el tipo de operación',
+    invalid_type_error: 'Seleccione el tipo de operación',
   }),
 
   /**
@@ -83,9 +83,9 @@ export const createOperationSchema = z.object({
    * then check it is before tomorrow's midnight.
    */
   date: z
-    .date({ required_error: 'Date is required', invalid_type_error: 'Date is required' })
+    .date({ required_error: 'La fecha es obligatoria', invalid_type_error: 'La fecha es obligatoria' })
     .refine((d) => d < startOfTomorrow(), {
-      message: 'Date cannot be in the future',
+      message: 'La fecha no puede ser futura',
     }),
 
   /**
@@ -93,10 +93,10 @@ export const createOperationSchema = z.object({
    * .trim() mutates the output value — the trimmed string is what gets submitted.
    */
   description: z
-    .string({ required_error: 'Description is required' })
+    .string({ required_error: 'La descripción es obligatoria' })
     .trim()
-    .min(1, 'Description is required')
-    .max(200, 'Description must be at most 200 characters'),
+    .min(1, 'La descripción es obligatoria')
+    .max(200, 'La descripción admite máximo 200 caracteres'),
 });
 
 export type CreateOperationFormValues = z.infer<typeof createOperationSchema>;

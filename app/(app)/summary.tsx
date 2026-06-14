@@ -37,7 +37,7 @@ export default function SummaryScreen() {
   return (
     <SafeAreaView style={styles.root}>
       <Text variant="heading" style={styles.title}>
-        Summary
+        Resumen
       </Text>
 
       <SummaryPanel
