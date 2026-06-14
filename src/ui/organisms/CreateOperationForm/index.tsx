@@ -75,8 +75,24 @@ export function CreateOperationForm({
             label="Monto"
             placeholder="0.00"
             keyboardType="decimal-pad"
+            maxLength={13}
             value={amountDisplayValue}
-            onChangeText={field.onChange}
+            onChangeText={(raw) => {
+              // Strip non-digit, non-period characters
+              let sanitized = raw.replace(/[^0-9.]/g, '');
+              // Keep only the first decimal separator
+              const firstDot = sanitized.indexOf('.');
+              if (firstDot !== -1) {
+                sanitized =
+                  sanitized.slice(0, firstDot + 1) +
+                  sanitized.slice(firstDot + 1).replace(/\./g, '');
+              }
+              // Enforce max 2 decimal places
+              if (firstDot !== -1 && sanitized.length > firstDot + 3) {
+                sanitized = sanitized.slice(0, firstDot + 3);
+              }
+              field.onChange(sanitized);
+            }}
             onBlur={field.onBlur}
             error={errors.amount?.message}
           />
