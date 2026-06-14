@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 
 import { useSummary } from '@/application/hooks/useSummary';
-import { Text } from '@/ui/atoms/Text';
 import { SummaryPanel } from '@/ui/organisms/SummaryPanel';
-import { colors, spacing, typography } from '@/ui/theme/tokens';
+import { colors } from '@/ui/theme/tokens';
 
 /**
  * SummaryScreen — C3 / C2 / C4: Date-range summary with per-currency aggregation.
@@ -36,10 +35,6 @@ export default function SummaryScreen() {
 
   return (
     <SafeAreaView style={styles.root}>
-      <Text variant="heading" style={styles.title}>
-        Resumen
-      </Text>
-
       <SummaryPanel
         summaries={summaries}
         isLoading={isLoading}
@@ -54,12 +49,5 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: colors.background,
-  },
-  title: {
-    fontSize: typography.xxl,
-    fontWeight: typography.bold,
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.md,
-    paddingBottom: spacing.sm,
   },
 });

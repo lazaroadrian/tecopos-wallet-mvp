@@ -6,7 +6,7 @@ import { useAccounts } from '@/application/hooks/useAccounts';
 import { useAccountsWithBalances } from '@/application/hooks/useAccountsWithBalances';
 import { Text } from '@/ui/atoms/Text';
 import { AccountList } from '@/ui/organisms/AccountList';
-import { colors, spacing, typography } from '@/ui/theme/tokens';
+import { colors, spacing } from '@/ui/theme/tokens';
 
 /**
  * AccountsScreen — M2: Accounts list with derived balance per account.
@@ -29,9 +29,6 @@ export default function AccountsScreen() {
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.header}>
-        <Text variant="heading" style={styles.title}>
-          Cuentas
-        </Text>
         {/* Summary navigation entry point (C3) */}
         <TouchableOpacity
           onPress={() => router.push('/(app)/summary')}
@@ -62,15 +59,11 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.md,
-    paddingTop: spacing.md,
+    paddingTop: spacing.sm,
     paddingBottom: spacing.sm,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  title: {
-    fontSize: typography.xxl,
-    fontWeight: typography.bold,
+    justifyContent: 'flex-end',
   },
   summaryButton: {
     paddingHorizontal: spacing.sm,
@@ -79,6 +72,6 @@ const styles = StyleSheet.create({
   summaryButtonText: {
     color: colors.primary,
     fontWeight: '600',
-    fontSize: typography.md,
+    fontSize: 16,
   },
 });
