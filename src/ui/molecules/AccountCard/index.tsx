@@ -4,7 +4,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { type Account } from '@/domain/entities/Account';
 import { type Operation } from '@/domain/entities/Operation';
 import { computeBalance } from '@/domain/use-cases/computeBalance';
-import { colors, radii, spacing, typography } from '@/ui/theme/tokens';
+import { colors, radii, shadows, spacing, typography } from '@/ui/theme/tokens';
 
 import { CurrencyAmount } from '../../atoms/CurrencyAmount';
 import { Text } from '../../atoms/Text';
@@ -72,12 +72,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: radii.lg,
     padding: spacing.md,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.sm,
     gap: spacing.xs,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   header: {
     flexDirection: 'row',
@@ -87,28 +85,31 @@ const styles = StyleSheet.create({
   name: {
     flex: 1,
     fontSize: typography.lg,
+    fontWeight: typography.semibold,
+    color: colors.textPrimary,
   },
   badge: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.primaryLight,
     borderRadius: radii.full,
     paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-    borderWidth: 1,
-    borderColor: colors.border,
+    paddingVertical: 3,
   },
   currency: {
-    color: colors.textSecondary,
-    fontWeight: typography.semibold,
+    color: colors.primary,
+    fontWeight: typography.bold,
+    fontSize: typography.xs,
+    letterSpacing: 0.5,
   },
   description: {
     color: colors.textSecondary,
+    fontSize: typography.sm,
   },
   balanceRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: spacing.xs,
-    paddingTop: spacing.xs,
+    marginTop: spacing.sm,
+    paddingTop: spacing.sm,
     borderTopWidth: 1,
     borderTopColor: colors.border,
   },

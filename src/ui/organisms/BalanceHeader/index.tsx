@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { type Account } from '@/domain/entities/Account';
 import { type Operation } from '@/domain/entities/Operation';
 import { computeBalance } from '@/domain/use-cases/computeBalance';
-import { colors, radii, spacing, typography } from '@/ui/theme/tokens';
+import { colors, radii, shadows, spacing, typography } from '@/ui/theme/tokens';
 
 import { CurrencyAmount } from '../../atoms/CurrencyAmount';
 import { Text } from '../../atoms/Text';
@@ -56,12 +56,11 @@ export function BalanceHeader({ account, operations }: BalanceHeaderProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.primary,
     paddingHorizontal: spacing.md,
-    paddingVertical: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
+    paddingVertical: spacing.lg,
     gap: spacing.xs,
+    ...shadows.md,
   },
   row: {
     flexDirection: 'row',
@@ -70,31 +69,35 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1,
-    fontSize: typography.xl,
+    fontSize: typography.lg,
+    fontWeight: typography.semibold,
+    color: colors.textOnPrimary,
   },
   currencyBadge: {
-    backgroundColor: colors.background,
+    backgroundColor: 'rgba(255,255,255,0.2)',
     borderRadius: radii.full,
     paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-    borderWidth: 1,
-    borderColor: colors.border,
+    paddingVertical: 3,
   },
   currencyText: {
-    color: colors.textSecondary,
-    fontWeight: typography.semibold,
+    color: colors.textOnPrimary,
+    fontWeight: typography.bold,
+    fontSize: typography.xs,
+    letterSpacing: 0.5,
   },
   balanceRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
-    marginTop: spacing.xs,
+    marginTop: spacing.sm,
   },
   balanceLabel: {
     fontSize: typography.sm,
+    color: 'rgba(255,255,255,0.75)',
   },
   balanceAmount: {
     fontSize: typography.xxl,
     fontWeight: typography.bold,
+    color: colors.textOnPrimary,
   },
 });

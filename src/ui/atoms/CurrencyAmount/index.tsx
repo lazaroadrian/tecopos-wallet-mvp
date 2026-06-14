@@ -31,7 +31,14 @@ export function CurrencyAmount({
   const symbol = getCurrencySymbol(currency);
   const absAmount = Math.abs(amount);
   const formatted = `${symbol}${absAmount.toFixed(2)}`;
-  const display = showSign && amount > 0 ? `+${formatted}` : formatted;
+  let display: string;
+  if (amount < 0) {
+    display = `-${formatted}`;
+  } else if (showSign && amount > 0) {
+    display = `+${formatted}`;
+  } else {
+    display = formatted;
+  }
 
   const amountColor: TextStyle =
     amount > 0

@@ -2,7 +2,7 @@
 import { StyleSheet, View } from 'react-native';
 
 import { type CurrencySummary } from '@/domain/use-cases/summarizeByCurrency';
-import { colors, radii, spacing, typography } from '@/ui/theme/tokens';
+import { colors, radii, shadows, spacing, typography } from '@/ui/theme/tokens';
 
 import { CurrencyAmount } from '../../atoms/CurrencyAmount';
 import { Text } from '../../atoms/Text';
@@ -33,10 +33,12 @@ export function SummaryByCurrency({ summary }: SummaryByCurrencyProps) {
             {currency}
           </Text>
         </View>
-        <Text variant="caption" style={styles.noConversionNote}>
-          Sin total entre monedas
-        </Text>
       </View>
+
+      {/* Per-currency disclaimer — explains why there's no grand total */}
+      <Text variant="caption" style={styles.noConversionNote}>
+        Cada moneda se totaliza por separado (no se convierten ni se suman entre sí).
+      </Text>
 
       {/* Income / Expense / Net rows */}
       <View style={styles.rows}>
@@ -86,46 +88,49 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     borderRadius: radii.lg,
     padding: spacing.md,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
+    ...shadows.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
     gap: spacing.sm,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
   },
   currencyBadge: {
-    backgroundColor: colors.background,
+    backgroundColor: colors.primaryLight,
     borderRadius: radii.full,
     paddingHorizontal: spacing.sm,
-    paddingVertical: 2,
-    borderWidth: 1,
-    borderColor: colors.border,
+    paddingVertical: 4,
+    alignSelf: 'flex-start',
   },
   currencyText: {
-    color: colors.textSecondary,
-    fontWeight: typography.semibold,
+    color: colors.primary,
+    fontWeight: typography.bold,
+    fontSize: typography.sm,
+    letterSpacing: 0.5,
   },
   noConversionNote: {
     color: colors.textMuted,
     fontSize: typography.xs,
     fontStyle: 'italic',
+    lineHeight: 16,
   },
   rows: {
     gap: spacing.xs,
+    backgroundColor: colors.borderSubtle,
+    borderRadius: radii.md,
+    padding: spacing.sm,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 2,
+    paddingVertical: 3,
   },
   rowLabel: {
     color: colors.textSecondary,
+    fontSize: typography.sm,
   },
   netRow: {
     borderTopWidth: 1,
@@ -135,6 +140,8 @@ const styles = StyleSheet.create({
   },
   netLabel: {
     fontWeight: typography.semibold,
+    color: colors.textPrimary,
+    fontSize: typography.md,
   },
   netAmount: {
     fontWeight: typography.bold,

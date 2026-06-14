@@ -3,7 +3,7 @@ import { MotiView } from 'moti';
 import { StyleSheet, View } from 'react-native';
 
 import { type Operation } from '@/domain/entities/Operation';
-import { colors, radii, spacing, typography } from '@/ui/theme/tokens';
+import { colors, radii, shadows, spacing, typography } from '@/ui/theme/tokens';
 
 import { CurrencyAmount } from '../../atoms/CurrencyAmount';
 import { Text } from '../../atoms/Text';
@@ -84,25 +84,23 @@ const styles = StyleSheet.create({
     borderRadius: radii.lg,
     padding: spacing.md,
     gap: spacing.sm,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 2,
-    elevation: 1,
+    ...shadows.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
   badge: {
-    width: 44,
-    height: 44,
+    width: 42,
+    height: 42,
     borderRadius: radii.md,
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
   },
   badgeIncome: {
-    backgroundColor: '#dcfce7', // light green
+    backgroundColor: colors.incomeBackground,
   },
   badgeExpense: {
-    backgroundColor: '#fee2e2', // light red
+    backgroundColor: colors.expenseBackground,
   },
   badgeText: {
     fontSize: typography.xs,
@@ -121,9 +119,13 @@ const styles = StyleSheet.create({
   },
   description: {
     fontWeight: typography.medium,
+    fontSize: typography.md,
+    color: colors.textPrimary,
   },
   date: {
     marginTop: 2,
+    fontSize: typography.xs,
+    color: colors.textMuted,
   },
   amount: {
     flexShrink: 0,
