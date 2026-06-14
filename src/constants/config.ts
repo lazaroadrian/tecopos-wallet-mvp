@@ -2,14 +2,14 @@
 
 /**
  * Application configuration — reads from Expo public env vars.
- * Set EXPO_PUBLIC_MOCKAPI_URL in your .env file before running.
- * See .env.example for the expected format.
+ *
+ * EXPO_PUBLIC_MOCKAPI_URL is read from .env at build time when present.
+ * It falls back to the public mockapi.io instance so the distributed APK
+ * works out-of-the-box without requiring a local .env file. The fallback
+ * URL points to a public, throwaway mock API and is safe to ship.
  */
-export const MOCKAPI_URL = process.env.EXPO_PUBLIC_MOCKAPI_URL ?? '';
+const FALLBACK_MOCKAPI_URL =
+  'https://6a2c70d53e2b60ab038fbfb8.mockapi.io/api/prueba';
 
-if (__DEV__ && !MOCKAPI_URL) {
-  console.warn(
-    '[config] EXPO_PUBLIC_MOCKAPI_URL is not set. ' +
-      'Copy .env.example to .env and fill in your mockapi URL.',
-  );
-}
+export const MOCKAPI_URL =
+  process.env.EXPO_PUBLIC_MOCKAPI_URL || FALLBACK_MOCKAPI_URL;
